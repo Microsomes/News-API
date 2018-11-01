@@ -1,0 +1,7 @@
+       title:'.list-of-entities__item-body-headline' ||null,
+                description:'.buzzard__summary'||null,
+                link:'.list-of-entities__item-body-headline a@href'||null,
+                urlToImage:'img@src'||null,
+                date:'.m_meta-property__date-date'||null,
+                categories:'.mini-info-list__section'||null,
+                time:'.m_meta-property__date-time',

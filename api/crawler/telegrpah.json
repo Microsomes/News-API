@@ -1,0 +1,16 @@
+{
+	"titleTag":".list-of-entities__item-body-headline",
+    "descriptionTag":".buzzard__summary",
+     "linkTag":".list-of-entities__item-body-headline a@href",
+     "imgTag":"img@src",
+      "dateTag":".m_meta-property__date-date",
+      "categoriesTag":".mini-info-list__section",
+      "timeTag":".m_meta-property__date-date",
+      "souceMeta":{
+      	"link":"https://www.telegraph.co.uk/news/",
+      	"categories":"Headlines",
+      	"source":{
+      		"name":"Telegraph"
+      	}
+      }
+}

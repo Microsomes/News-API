@@ -1,0 +1,16 @@
+{
+	"titleTag":".title-link__title-text",
+    "descriptionTag":".buzzard__summary",
+     "linkTag":"a@href",
+     "imgTag":"img@src",
+      "dateTag":".buzzard__info-list ul li",
+      "categoriesTag":".mini-info-list__section",
+      "timeTag":".m_meta-property__date-time",
+      "souceMeta":{
+      	"link":"https://www.bbc.co.uk/news/uk",
+      	"categories":"World",
+      	"source":{
+      		"name":"BBC News"
+      	}
+      }
+}
