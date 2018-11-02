@@ -4,6 +4,18 @@ var sha256 = require('js-sha256').sha256;
 var sha224 = require('js-sha256').sha224;
 
 
+function createMonopoly_table(){
+    //spwans the monopoly leaderboard table
+    var sql="CREATE TABLE `monopoly` (`id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,`name` varchar(255) NOT NULL,`wins` int(11) NOT NULL DEFAULT '0',`created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,`xbox_handle` varchar(255) DEFAULT NULL,`psn_handle` varchar(255) DEFAULT NULL,`steam_handle` varchar(255) DEFAULT NULL)";
+    con.query(sql,(err,result)=>{
+        if(err){
+            console.log("table already exists","monopoly table");
+            return;
+        }
+        console.log("table created_monopoly table");
+    })
+}
+
 
 function createComment_table(){
     //spawns a comment stable in 
@@ -166,6 +178,159 @@ class newsify_auto{
 
     }
 }
+
+
+//class for monpoly related shiz
+class Monopoly{
+
+
+   
+
+    checkNameDub(name){
+        //checks if the name of the person entered is unique
+        return new Promise((resolve,reject)=>{
+            var sql="SELECT name FROM monopoly WHERE name=?";
+            con.query(sql,[name],(err,result)=>{
+                if(err){
+                    reject(err);
+                    return;
+                }
+                resolve(result);
+            })
+        })
+    }
+
+    //add leaderboard with just a name
+    addLeaderboardRecord_first(name,wins,xbox,psn,steam){
+        return new Promise((resolve,reject)=>{
+            var sql="INSERT INTO monopoly SET ?";
+            con.query(sql,{
+                name,
+                wins,
+                xbox_handle:xbox || "--",
+                psn_handle:psn || "--",
+                steam_handle:steam || "--",
+            })
+        })
+    }
+
+    grabAllEntries(){
+        return new Promise((resolve,reject)=>{
+            var sql="SELECT * FROM monopoly";
+            con.query(sql,(err,result)=>{
+                if(err){
+                    reject(err);
+                    return
+                }
+                resolve(result);
+            })
+        })
+    }
+
+    grabAllEntries_by_wins(){
+        return new Promise((resolve,reject)=>{
+            var sql="SELECT * FROM monopoly ORDER BY wins DESC";
+            con.query(sql,(err,result)=>{
+                if(err){
+                    reject(err);
+                    return
+                }
+                resolve(result);
+            })
+        })
+    }
+
+    grabAllEntries_by_wins_best(){
+        return new Promise((resolve,reject)=>{
+            var sql="SELECT * FROM monopoly ORDER BY wins DESC LIMIT 3";
+            con.query(sql,(err,result)=>{
+                if(err){
+                    reject(err);
+                    return
+                }
+                resolve(result);
+            })
+        })
+    }
+
+    searchEntry(query){
+        return new Promise((resolve,reject)=>{
+            var sql="SELECT * FROM monopoly WHERE name LIKE ?";
+            con.query(sql,["%"+query+"%"],(err,result)=>{
+                if(err){
+                    reject(err);
+                    return;
+                }
+                resolve(result);
+            })
+        })
+    }
+
+    searchEntry_xbox(query){
+        return new Promise((resolve,reject)=>{
+            var sql="SELECT * FROM monopoly WHERE xbox_handle LIKE ?";
+            con.query(sql,["%"+query+"%"],(err,result)=>{
+                if(err){
+                    reject(err);
+                    return;
+                }
+                resolve(result);
+            })
+        })
+    }
+    searchEntry_psn(query){
+        return new Promise((resolve,reject)=>{
+            var sql="SELECT * FROM monopoly WHERE psn_handle LIKE ?";
+            con.query(sql,["%"+query+"%"],(err,result)=>{
+                if(err){
+                    reject(err);
+                    return;
+                }
+                resolve(result);
+            })
+        })
+    }
+    searchEntry_steam(query){
+        return new Promise((resolve,reject)=>{
+            var sql="SELECT * FROM monopoly WHERE steam_handle LIKE ?";
+            con.query(sql,["%"+query+"%"],(err,result)=>{
+                if(err){
+                    reject(err);
+                    return;
+                }
+                resolve(result);
+            })
+        })
+    }
+
+    getEntryById(id){
+        return new Promise((resolve,reject)=>{
+            var sql="SELECT * FROM monopoly WHERE id=?";
+            con.query(sql,[id],(err,result)=>{
+                if(err){
+                    reject(err);
+                    return;
+                }
+                resolve(result);
+            })
+        })
+    }
+
+    incrementWins(id){
+        return new Promise((resolve,reject)=>{
+            var sql="UPDATE monopoly SET wins= wins+1 WHERE id=?";
+            con.query(sql,[id],(err,result)=>{
+                if(err){
+                    reject(err);
+                    return;
+                }
+                resolve(result);
+            })
+        })
+            
+    }
+}
+
 
 class newsRelated{
     constructor(){
@@ -905,6 +1070,7 @@ function init(){
     createNewsifyUsers_table();
     createComment_table();
     sourceItem_table();
+    createMonopoly_table();
 }
 
 
@@ -1010,5 +1176,6 @@ module.exports={
     newsRelated,
     newsify_auto,
     commentv2,
-    coinsRelated
+    coinsRelated,
+    Monopoly
 }

@@ -21,6 +21,9 @@ const bodyParser= require('body-parser');
  const coinsapi= require("./api/coins/coins");
  //coinsapi
 
+
+ const monopoly= require("./api/monopoly/leaderboard");
+
  app.use('/images', express.static('images'))
 
 
@@ -58,6 +61,8 @@ app.use("/neverending",neverendingfactsapi);
  app.use("/commentv2",commentV2);
  app.use("/coins",coinsapi);
  app.use("/upload",imageUploader)
+
+ app.use("/monopoly",monopoly)
 
 
  
